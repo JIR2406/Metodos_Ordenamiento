@@ -35,7 +35,7 @@ public class OrdenBus {
                 a[j] = aux;
                 i++;
                 j--;
-            }//Inicio a j es la izquierda
+            }
         } while (i <= j);//i a fin es la derecha
         if (inicio < j) {
             quickS(a, inicio, j);
@@ -46,43 +46,38 @@ public class OrdenBus {
 
     }
 
-    public void radix(ColaCir a, int t) {
+    public void radix(int a[], int conteo) {
+        int uni = 0;
         ColaCir cola[] = new ColaCir[10];
-        for (int i = 0; i < cola.length - 1; i++) {
-            cola[i] = new ColaCir(t);
+        for (int j = 0; j < cola.length; j++) {
+            cola[j] = new ColaCir(a.length);
         }
-        while (!a.empty()) {
-            int aux = (int) a.remove();
-            int unidad = aux % 10;
-            int decena = (aux % 100 - aux % 10) / 10;
-            int centena = (aux % 1000 - aux % 100) / 100;
-            if (decena == 0) {
-                cola[0].insert(aux);
-            } else if (decena == 1) {
-                cola[1].insert(aux);
-            } else if (decena == 2) {
-                cola[2].insert(aux);
-            } else if (decena == 3) {
-                cola[3].insert(aux);
-            } else if (decena == 4) {
-                cola[4].insert(aux);
-            } else if (decena == 5) {
-                cola[5].insert(aux);
-            } else if (decena == 6) {
-                cola[6].insert(aux);
-            } else if (decena == 7) {
-                cola[7].insert(aux);
-            } else if (decena == 8) {
-                cola[8].insert(aux);
-            } else if (decena == 9) {
-                cola[9].insert(aux);
+        for (int i = 0; i < a.length; i++) {
+            int aux = (int) a[i];
+            if (conteo == 0) {
+                uni = aux % 10;
+            } else if (conteo == 1) {
+                uni = (aux % 100 - aux % 10) / 10;
+            } else if (conteo == 2) {
+                uni = aux / 100;
+            }
+            cola[uni].insert(aux);
+        }
+        conteo++;
+        System.out.println(conteo + "la Distribucion");
+        int x = 0;
+        for (int j = 0; j < cola.length; j++) {
+            while (!cola[j].empty()) {
+                a[x] = (int) cola[j].remove();
+                System.out.print("[" + a[x] + "]");
+                x++;
             }
         }
-        for (int i = 0; i < cola.length - 1; i++) {
-            while (!cola[i].empty()) {
-                a.insert(cola[i].remove());
-            }
+        System.out.println("");
+        if (conteo != 3) {
+            radix(a, conteo);
         }
+
     }
 
     public void desplegar(int a[]) {
@@ -93,6 +88,33 @@ public class OrdenBus {
             System.out.print(a[i]);
         }
         System.out.println("");
+    }
+
+    public int busquedaBin(int a[], int bus) {
+        int ini = 0;
+        int fin = a.length - 1;
+        int c = (ini + fin) / 2;
+        do {
+            if (a[c] < bus) {
+                fin = c - 1;
+                c = (ini + fin) / 2;
+            } else if (a[c] > bus) {
+                ini = c + 1;
+                c = (ini + fin) / 2;
+            }
+            if (ini > a.length - 1 || fin < 0) {
+                return -1;
+            }
+        } while (a[c] != bus);
+        return c;
+    }
+
+    public int plegamiento(String clave) {
+        int a = Integer.parseInt(clave.substring(0, 3));
+        int b = Integer.parseInt(clave.substring(3, 6));
+        int c = Integer.parseInt(clave.substring(6, 8));
+        String claveN=Integer.toString(a+b+c); 
+        return Integer.parseInt(claveN.substring(1, 4));
     }
 
 }

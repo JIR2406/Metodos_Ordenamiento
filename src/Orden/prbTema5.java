@@ -10,44 +10,62 @@ public class prbTema5 {
         int i;
         int a[] = null;
         int op;
-
+        System.out.println("Ingresar tamaño:");
+        i = s.nextInt();
+        a = new int[i];
         do {
+
+            for (int j = 0; j < a.length; j++) {
+                a[j] = getRandom();
+            }
             System.out.println("Menu");
-            System.out.println("1.- Determinar tamaño Arreglo");
-            System.out.println("2.- Llenar arreglo");
-            System.out.println("3.- Metodo ordenamiento Burbuja");
-            System.out.println("4.- Metodo ordenamiento QuickSquirt");
-            System.out.println("5.- Metodo ordenamiento Radix");
-            System.out.println("6- Desplegar arreglo");
+            System.out.println("1.- Metodo ordenamiento Burbuja");
+            System.out.println("2.- Metodo ordenamiento QuickSquirt");
+            System.out.println("3.- Metodo ordenamiento Radix");
+            System.out.println("4- Busqueda dato");
+            System.out.println("5- Tabla Hash");
             System.out.println("0.- Salir");
             op = s.nextInt();
+            s.nextLine();
             switch (op) {
                 case 1: {
-                    System.out.println("Ingresar tamaño:");
-                    i = s.nextInt();
-                    a = new int[i];
+                    ord.desplegar(a);
+                    ord.burbuja(a);
+                    ord.desplegar(a);
                     break;
                 }
                 case 2: {
-                    for (int j = 0; j < a.length; j++) {
-                        a[j] = getRandom(5, 100);
-                    }
+                    ord.desplegar(a);
+                    ord.quickS(a, 0, a.length - 1);
+                    ord.desplegar(a);
                     break;
                 }
                 case 3: {
-                    ord.burbuja(a);
+                    ord.desplegar(a);
+                    ord.radix(a, 0);
+                    ord.desplegar(a);
                     break;
                 }
                 case 4: {
                     ord.quickS(a, 0, a.length - 1);
+                    ord.desplegar(a);
+                    System.out.print("Ingresa el dato a buscar:\t");
+                    int dato = s.nextInt();
+                    s.nextLine();
+                    if (ord.busquedaBin(a, dato) == -1) {
+                        System.out.println("Dato no encontrado");
+                    } else {
+                        System.out.println("La posicion en la que se encuentra es: " + ord.busquedaBin(a, dato));
+                    }
                     break;
                 }
                 case 5: {
-                    ord.radix();
-                }
-                case 6: {
-                    ord.desplegar(a);
-                    break;
+                    String cadena = "";
+                    do {
+                        System.out.print("Ingrese numero control mayor a 8 digitos:\t");
+                        cadena = s.nextLine();
+                    } while (cadena.length() != 8);
+                    System.out.println(ord.plegamiento(cadena));
                 }
                 case 0: {
                     System.out.println("Cerrando programa... .. . ");
@@ -60,7 +78,7 @@ public class prbTema5 {
 
     }
 
-    public static int getRandom(int ini, int fin) {
-        return (int) (Math.random() * ((fin + 1) - ini)) + 1;
+    public static int getRandom() {
+        return (int) (Math.random() * ((999 + 1) - 0)) + 1;
     }
 }
